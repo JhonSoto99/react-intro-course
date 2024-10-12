@@ -6,27 +6,40 @@ import {CreateTodoButton} from "./CreateTodoButton";
 import {TodoList} from "./TodoList";
 import {useState} from "react";
 
-const defaultTodos = [
-    {text: 'Cortar cebolla', completed: false},
-    {text: 'Curso React', completed: true},
-    {text: 'Llorar', completed: false},
-    {text: 'LALALALAL', completed: true},
-]
+//const defaultTodos = [
+//    {text: 'Cortar cebolla', completed: false},
+//    {text: 'Curso React', completed: true},
+//    {text: 'Llorar', completed: false},
+//    {text: 'LALALALAL', completed: true},
+//]
 
-// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
+//localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
 
-function App() {
-    const localStorageTodos = localStorage.getItem('TODOS_V1');
-    let parsedTodos;
+// Custom Hook
+function useLocalStore(itemName, initialValue) {
 
-    if (!localStorageTodos) {
-        localStorage.setItem('TODOS_V1', JSON.stringify([]))
-        parsedTodos = [];
+    const localStorageItem = localStorage.getItem(itemName);
+    let parsedItem;
+
+    if (!localStorageItem) {
+        localStorage.setItem(itemName, JSON.stringify(initialValue))
+        parsedItem = [];
     } else {
-        parsedTodos = JSON.parse(localStorageTodos);
+        parsedItem = JSON.parse(localStorageItem);
     }
 
-    const [todos, setTodos] = useState(parsedTodos);
+    const [item, setItem] = useState(parsedItem);
+
+    const saveItem = (newItem) => {
+        setItem(newItem);
+        localStorage.setItem(itemName, JSON.stringify(newItem))
+    }
+
+    return [item, saveItem];
+}
+
+function App() {
+    const [todos, saveTodos] = useLocalStore("TODOS_V1", []);
     const [searchValue, setSearchValue] = useState("");
 
     // Estados derivados.
@@ -35,11 +48,6 @@ function App() {
     const searchedTodos = todos.filter((todo) => {
         return todo.text.toLowerCase().includes(searchValue.toLowerCase())
     })
-
-    const saveTodos = (newTodos) => {
-        setTodos(newTodos);
-        localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
-    }
 
     const completeTodo = (text) => {
         const newTodos = [...todos];
