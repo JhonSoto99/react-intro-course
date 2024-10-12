@@ -1,4 +1,4 @@
-import {TodoIcon} from "./TodoIcon";
+import {TodoIcon} from "./index";
 
 function CompleteIcon({completed, onClick}) {
     return (
