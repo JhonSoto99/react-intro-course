@@ -13,8 +13,20 @@ const defaultTodos = [
     {text: 'LALALALAL', completed: true},
 ]
 
+// localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
+
 function App() {
-    const [todos, setTodos] = useState(defaultTodos);
+    const localStorageTodos = localStorage.getItem('TODOS_V1');
+    let parsedTodos;
+
+    if (!localStorageTodos) {
+        localStorage.setItem('TODOS_V1', JSON.stringify([]))
+        parsedTodos = [];
+    } else {
+        parsedTodos = JSON.parse(localStorageTodos);
+    }
+
+    const [todos, setTodos] = useState(parsedTodos);
     const [searchValue, setSearchValue] = useState("");
 
     // Estados derivados.
@@ -24,18 +36,23 @@ function App() {
         return todo.text.toLowerCase().includes(searchValue.toLowerCase())
     })
 
+    const saveTodos = (newTodos) => {
+        setTodos(newTodos);
+        localStorage.setItem('TODOS_V1', JSON.stringify(newTodos))
+    }
+
     const completeTodo = (text) => {
         const newTodos = [...todos];
         const todoIndex = newTodos.findIndex(todo => todo.text === text)
         newTodos[todoIndex].completed = true;
-        setTodos(newTodos);
+        saveTodos(newTodos);
     }
 
     const deleteTodo = (text) => {
         const newTodos = [...todos];
         const todoIndex = newTodos.findIndex(todo => todo.text === text)
         newTodos.splice(todoIndex, 1);
-        setTodos(newTodos);
+        saveTodos(newTodos);
     }
 
 
