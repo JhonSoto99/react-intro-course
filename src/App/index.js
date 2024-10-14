@@ -1,20 +1,16 @@
 import '../App.css';
-import { TodoCounter } from "../TodoCounter";
-import {TodoSearch} from "../TodoSearch";
-import {TodoItem} from "../TodoItem";
-import {CreateTodoButton} from "../CreateTodoButton";
-import {TodoList} from "../TodoList";
+import {AppUI} from "./AppUI";
 import {useState} from "react";
 import {useLocalStore} from "./useLocalStorage";
 
-//const defaultTodos = [
-//    {text: 'Cortar cebolla', completed: false},
-//    {text: 'Curso React', completed: true},
-//    {text: 'Llorar', completed: false},
-//    {text: 'LALALALAL', completed: true},
-//]
+const defaultTodos = [
+    {text: 'Cortar cebolla', completed: false},
+    {text: 'Curso React', completed: true},
+    {text: 'Llorar', completed: false},
+    {text: 'LALALALAL', completed: true},
+]
 
-//localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
+localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
 
 function App() {
     const [todos, saveTodos] = useLocalStore("TODOS_V1", []);
@@ -41,30 +37,16 @@ function App() {
         saveTodos(newTodos);
     }
 
-
-    return (
-        <>
-        <TodoCounter completed={completedTodos} total={totalTodos} />
-        <TodoSearch
+    return(
+        <AppUI
+            completedTodos={completedTodos}
+            totalTodos={totalTodos}
             searchValue={searchValue}
+            searchedTodos={searchedTodos}
             setSearchValue={setSearchValue}
+            completeTodo={completeTodo}
+            deleteTodo={deleteTodo}
         />
-
-        <TodoList>
-            {searchedTodos.map(todo =>(
-                <TodoItem
-                    key={todo.text}
-                    completed={todo.completed}
-                    text={todo.text}
-                    onComplete={() => completeTodo(todo.text)} // Encapsula la función en otra para que no se ejecute aún.
-                    onDelete={() => deleteTodo(todo.text)} // Encapsula la función en otra para que no se ejecute aún.
-                />
-            ))}
-        </TodoList>
-
-        <CreateTodoButton />
-
-    </>
     );
 }
 
