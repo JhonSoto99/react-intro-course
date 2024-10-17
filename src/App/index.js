@@ -2,6 +2,7 @@ import '../App.css';
 import {AppUI} from "./AppUI";
 import {useState} from "react";
 import {useLocalStore} from "./useLocalStorage";
+import React from "react";
 
 const defaultTodos = [
     {text: 'Cortar cebolla', completed: false},
@@ -10,10 +11,15 @@ const defaultTodos = [
     {text: 'LALALALAL', completed: true},
 ]
 
-localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
+//localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
 
 function App() {
-    const [todos, saveTodos] = useLocalStore("TODOS_V1", []);
+    const {
+        item: todos,
+        saveTodos,
+        loading,
+        error
+    } = useLocalStore("TODOS_V1", []);
     const [searchValue, setSearchValue] = useState("");
 
     // Estados derivados.
@@ -39,6 +45,8 @@ function App() {
 
     return(
         <AppUI
+            loading={loading}
+            error={error}
             completedTodos={completedTodos}
             totalTodos={totalTodos}
             searchValue={searchValue}
