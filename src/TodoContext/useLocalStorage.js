@@ -1,5 +1,14 @@
 import {useState, useEffect} from "react";
 
+const defaultTodos = [
+    {text: 'Cortar cebolla', completed: false},
+    {text: 'Curso React', completed: true},
+    {text: 'Llorar', completed: false},
+    {text: 'LALALALAL', completed: true},
+]
+
+//localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos))
+
 function useLocalStore(itemName, initialValue) {
     const [item, setItem] = useState(initialValue);
     const [loading, setLoading] = useState(true);
