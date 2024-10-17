@@ -2,7 +2,7 @@ import "./EmptyTodos.css"
 
 function EmptyTodos() {
     return (
-        <p>Hubo un error.</p>
+        <p>No se encontró ningún TODO</p>
     );
 }
 
