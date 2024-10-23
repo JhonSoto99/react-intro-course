@@ -6,7 +6,7 @@ const TodoContext = createContext();
 function TodoProvider({children}) {
     const {
         item: todos,
-        saveTodos,
+        saveItem: saveTodos,
         loading,
         error
     } = useLocalStore("TODOS_V1", []);
@@ -34,6 +34,16 @@ function TodoProvider({children}) {
         saveTodos(newTodos);
     }
 
+    const addTodo = (text) => {
+        const newTodos = [...todos]
+        newTodos.push({
+            text: text,
+            completed: false
+        })
+        saveTodos(newTodos);
+
+    }
+
     return (
         <TodoContext.Provider value={{
             loading,
@@ -46,7 +56,8 @@ function TodoProvider({children}) {
             completeTodo,
             deleteTodo,
             openModal,
-            setOpenModal
+            setOpenModal,
+            addTodo
         }}>
             {children}
         </TodoContext.Provider>
