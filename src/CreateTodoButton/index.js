@@ -1,9 +1,9 @@
 import "./CreateTodoButton.css"
-function CreateTodoButton({onShowHiddenModal}) {
+function CreateTodoButton({setOpenModal}) {
     return (
         <button
             className="CreateTodoButton"
-            onClick={onShowHiddenModal}
+            onClick={() => {setOpenModal(state => !state)}}
         >+</button>
     );
 }

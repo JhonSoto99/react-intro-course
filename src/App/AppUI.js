@@ -18,8 +18,7 @@ function AppUI() {
                 completeTodo,
                 deleteTodo,
                 openModal,
-                setOpenModal,
-                showHiddenModal
+                setOpenModal
         } = useContext(TodoContext);
     return (
         <>
@@ -45,7 +44,7 @@ function AppUI() {
                             />
                         ))}
                 </TodoList>
-            <CreateTodoButton onShowHiddenModal={() => showHiddenModal()}/>
+            <CreateTodoButton setOpenModal={setOpenModal}/>
 
             { openModal && (
                 <Modal>
