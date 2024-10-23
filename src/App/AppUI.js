@@ -8,6 +8,7 @@ import {TodosError} from "../TodosError";
 import {EmptyTodos} from "../EmptyTodos";
 import {TodoContext} from "../TodoContext"
 import {useContext} from "react";
+import {Modal} from "../Modal";
 
 function AppUI() {
         const {
@@ -15,7 +16,10 @@ function AppUI() {
                 error,
                 searchedTodos,
                 completeTodo,
-                deleteTodo
+                deleteTodo,
+                openModal,
+                setOpenModal,
+                showHiddenModal
         } = useContext(TodoContext);
     return (
         <>
@@ -41,7 +45,14 @@ function AppUI() {
                             />
                         ))}
                 </TodoList>
-            <CreateTodoButton />
+            <CreateTodoButton onShowHiddenModal={() => showHiddenModal()}/>
+
+            { openModal && (
+                <Modal>
+                    La funcionalidad de agregar TODO
+                </Modal>
+
+            )}
 
         </>
     );

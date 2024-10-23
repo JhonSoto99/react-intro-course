@@ -11,6 +11,7 @@ function TodoProvider({children}) {
         error
     } = useLocalStore("TODOS_V1", []);
     const [searchValue, setSearchValue] = useState("");
+    const [openModal, setOpenModal] = useState(false);
 
     // Estados derivados.
     const completedTodos = todos.filter(todo => !!todo.completed).length;
@@ -33,6 +34,10 @@ function TodoProvider({children}) {
         saveTodos(newTodos);
     }
 
+    const showHiddenModal = () => {
+        setOpenModal(!openModal);
+    }
+
     return (
         <TodoContext.Provider value={{
             loading,
@@ -43,7 +48,10 @@ function TodoProvider({children}) {
             searchedTodos,
             setSearchValue,
             completeTodo,
-            deleteTodo
+            deleteTodo,
+            openModal,
+            setOpenModal,
+            showHiddenModal
         }}>
             {children}
         </TodoContext.Provider>

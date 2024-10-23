@@ -1,9 +1,9 @@
 import "./CreateTodoButton.css"
-function CreateTodoButton() {
+function CreateTodoButton({onShowHiddenModal}) {
     return (
         <button
             className="CreateTodoButton"
-            onClick={(event) => console.log("Click", event.target)}
+            onClick={onShowHiddenModal}
         >+</button>
     );
 }
